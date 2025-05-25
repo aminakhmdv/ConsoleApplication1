@@ -151,3 +151,5 @@ void func(double (*pf)(double), double (*f)(double), double eps, double a, doubl
 	printf("Iterations: %lg\n\n", steps);
 
 }
+
+//Освоение github
