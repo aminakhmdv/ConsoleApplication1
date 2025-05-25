@@ -2,16 +2,15 @@
 #include <math.h>
 
 double avtostep(double eps, double a, double b, double (*f)(double));
-void func(double (*pf)(double), double (*f)(double), double eps, double a, double b);
 
 double result;
 double qarant, sredne;
 double steps;
-double eps1 = 1e-7; 
-double eps2 = 1e-9; 
-double eps3 = 1e-11; 
+double eps1 = 1e-7;
+double eps2 = 1e-9;
+double eps3 = 1e-11;
 
-double kvadratur_form(double a, double b, double (*f)(double)) 
+double kvadratur_form(double a, double b, double (*f)(double))
 {
 	return ((b - a) / 6) * (f(a) + 4 * f((a + b) / 2) + f(b));
 }
@@ -53,6 +52,11 @@ double pf3(double x)
 	return 2 * (atan(5 * x));
 }
 
+double f4(double x)
+{
+	return 3 * x * sin(x*x*x) + 3 * x;
+}
+
 
 
 int main() {
@@ -63,20 +67,173 @@ int main() {
 	printf("b = ");
 	scanf_s("%lf", &b);
 
-	printf("For f1\n");
-	func(pf1, f1, eps1, a, b);
-	func(pf1, f1, eps2, a, b);
-	func(pf1, f1, eps3, a, b);
+	//Для f1 при eps = 10^-7
+	/*printf("For f1 at eps = 10^-7\n");
 
-	printf("For f2\n");
-	func(pf2, f2, eps1, a, b);
-	func(pf2, f2, eps3, a, b);
-	func(pf2, f2, eps3, a, b);
+	result = avtostep(eps1, a, b, f1);
+	printf("Result: %lg\n", result);
 
-	printf("For f3\n");
-	func(pf3, f3, eps1, a, b);
-	func(pf3, f3, eps3, a, b);
-	func(pf3, f3, eps3, a, b);
+	double tocn1 = pf1(b) - pf1(a);
+	double absol_err1 = fabs(result - tocn1);
+
+	printf("Absolute error: %lg\n", absol_err1);
+	printf("Guaranted error: %lg\n", qarant);
+	printf("Normal error: %lg\n", sredne);
+	printf("Iteratoin: %lg\n", steps);
+
+	printf("\n");
+	//Для f1 при eps = 10^-9
+	printf("For f1 at eps = 10^-9\n");
+
+	result = avtostep(eps2, a, b, f1);
+	printf("Result: %lg\n", result);
+
+	tocn1 = pf1(b) - pf1(a);
+	absol_err1 = fabs(result - tocn1);
+
+	printf("Absolute error: %lg\n", absol_err1);
+	printf("Garanted error: %lg\n", qarant);
+	printf("Normal error: %lg\n", sredne);
+	printf("Iteratoin: %lg\n", steps);
+
+	printf("\n");
+
+
+	//Для f1 при eps = 10^-11
+	printf("For f1 at eps = 10^-11\n");
+
+	result = avtostep(eps3, a, b, f1);
+	printf("Result: %lg\n", result);
+
+	tocn1 = pf1(b) - pf1(a);
+	absol_err1 = fabs(result - tocn1);
+
+	printf("Absolute error: %lg\n", absol_err1);
+	printf("Garanted error: %lg\n", qarant);
+	printf("Normal error: %lg\n", sredne);
+	printf("Iteratoin: %lg\n", steps);
+
+	printf("\n\n\n\n\n");
+
+	//Для f2 при eps = 10^-7
+	printf("For f2 at eps = 10^-7\n");
+
+	result = avtostep(eps1, a, b, f2);
+	printf("Result: %lg\n", result);
+
+	double tocn2 = pf2(b) - pf2(a);
+	double absol_err2 = fabs(result - tocn2);
+
+	printf("Absolute error: %lg\n", absol_err2);
+	printf("Garanted error: %lg\n", qarant);
+	printf("Normal error: %lg\n", sredne);
+	printf("Iteratoin: %lg\n", steps);
+
+	printf("\n");
+
+
+	//Для f2 при eps = 10^-9
+	printf("For f2 at eps = 10^-9\n");
+
+	result = avtostep(eps2, a, b, f2);
+	printf("Result: %lg\n", result);
+
+	tocn2 = pf2(b) - pf2(a);
+	absol_err2 = fabs(result - tocn2);
+
+	printf("Absolute error: %lg\n", absol_err2);
+	printf("Garanted error: %lg\n", qarant);
+	printf("Normal error: %lg\n", sredne);
+	printf("Iteratoin: %lg\n", steps);
+
+	printf("\n");
+
+	//Для f2 при eps = 10^-11
+	printf("For f2 at eps = 10^-11\n");
+
+	result = avtostep(eps3, a, b, f2);
+	printf("Result: %lg\n", result);
+
+	tocn2 = pf2(b) - pf2(a);
+	absol_err2 = fabs(result - tocn2);
+
+	printf("Absolute error: %lg\n", absol_err2);
+	printf("Garanted error: %lg\n", qarant);
+	printf("Normal error: %lg\n", sredne);
+	printf("Iteratoin: %lg\n", steps);
+
+	printf("\n\n\n\n\n");
+
+
+	//Для f3 при eps = 10^-7
+	printf("For f3 at eps = 10^-7\n");
+
+	result = avtostep(eps1, a, b, f3);
+	printf("Result: %lg\n", result);
+
+	double tocn3 = pf3(b) - pf3(a);
+	double absol_err3 = fabs(result - tocn3);
+
+	printf("Absolute error: %lg\n", absol_err3);
+	printf("Garanted error: %lg\n", qarant);
+	printf("Normal error: %lg\n", sredne);
+	printf("Iteratoin: %lg\n", steps);
+
+	printf("\n");
+
+	//Для f3 при eps = 10^-9
+	printf("For f3 at eps = 10^-9\n");
+
+	result = avtostep(eps2, a, b, f3);
+	printf("Result: %lg\n", result);
+
+	tocn3 = pf3(b) - pf3(a);
+	absol_err3 = fabs(result - tocn3);
+
+	printf("Absolute error: %lg\n", absol_err3);
+	printf("Garanted error: %lg\n", qarant);
+	printf("Normal error: %lg\n", sredne);
+	printf("Iteratoin: %lg\n", steps);
+
+	printf("\n");
+
+	//Для f3 при eps = 10^-11
+	printf("For f3 at eps = 10^-11\n");
+
+	result = avtostep(eps3, a, b, f3);
+	printf("Result: %lg\n", result);
+
+	tocn3 = pf3(b) - pf3(a);
+	absol_err3 = fabs(result - tocn3);
+
+	printf("Absolute error: %lg\n", absol_err3);
+	printf("Garanted error: %lg\n", qarant);
+	printf("Normal error: %lg\n", sredne);
+	printf("Iteratoin: %lg\n", steps);
+
+	printf("\n\n\n\n\n");*/
+
+
+
+	//Для f1 при eps = 10^-7
+	printf("For f1 at eps = 10^-7\n");
+	result = avtostep(eps1, a, b, f4);
+	printf("Result: %lg\n", result);
+
+	//Для f1 при eps = 10^-9
+	printf("For f1 at eps = 10^-9\n");
+	result = avtostep(eps2, a, b, f4);
+	printf("Result: %lg\n", result);
+
+
+	//Для f1 при eps = 10^-11
+	printf("For f1 at eps = 10^-11\n");
+	result = avtostep(eps3, a, b, f4);
+	printf("Result: %lg\n", result);
+
+
+
+
 
 
 	return 0;
@@ -136,20 +293,3 @@ double avtostep(double eps, double a, double b, double (*f)(double)) {
 
 	return result;
 }
-
-void func(double (*pf)(double), double (*f)(double), double eps, double a, double b) {
-
-	result = avtostep(eps, a, b, f);
-	double tocn = pf(b) - pf(a);
-	double absol_err = fabs(result - tocn);
-
-	printf("Result: %lg\n", result);
-	printf("Exact: %lg\n", tocn);
-	printf("Absolute error: %lg\n", absol_err);
-	printf("Guaranteed error: %lg\n", qarant);
-	printf("Normal error: %lg\n", sredne);
-	printf("Iterations: %lg\n\n", steps);
-
-}
-
-//Освоение github

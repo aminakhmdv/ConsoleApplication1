@@ -22,4 +22,7 @@
   <ItemGroup>
     <Text Include="test.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="itoqovaya.md" />
+  </ItemGroup>
 </Project>
